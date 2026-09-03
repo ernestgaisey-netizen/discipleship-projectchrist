@@ -263,7 +263,7 @@ export default function HomePage({ user }) {
 
           <div style={{ display: 'flex', gap: 18, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 40 }}>
             {[
-              ['📞', 'CALL / WHATSAPP', '+233 (0) 548 607 030'],
+              ['📞', 'CALL / WHATSAPP', '+233 (0) 548 607 030 test123'],
               ['📧', 'EMAIL',           'admin@projectchrist.org'],
               ['⏰', 'HOURS',           'Mon–Sat, 8am – 6pm'],
             ].map(([icon, label, val]) => (
