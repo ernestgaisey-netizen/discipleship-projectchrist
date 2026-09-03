@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c,o as t}from"./app-CKr4KDw8.js";const e={},r={src:"/images/project-christ-logo.png",alt:"Project Christ Discipleship Logo"};function s(i,n){return t(),c("img",r)}const a=o(e,[["render",s]]);export{a as A};

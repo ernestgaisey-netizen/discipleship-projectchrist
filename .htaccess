@@ -1,0 +1,29 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Serve Vite-built assets from public/build/ (Hostinger: doc-root is project root, not public/)
+    RewriteRule ^build/(.*)$ public/build/$1 [L]
+
+    # Serve uploaded/certificate files from public/storage/
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Protect sensitive files
+<FilesMatch "^\.env|composer\.(json|lock|phar)|artisan|phpunit\.xml|tailwind\.config\.js|vite\.config\.js|package.*\.json">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

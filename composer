@@ -1,0 +1,2 @@
+#!/bin/sh
+php /tmp/composer.phar "$@"
