@@ -59,12 +59,16 @@ class Module extends Model
     // asked to pick from, and the fallback topic for untagged existing questions.
     public function candidateTopics(): array
     {
-        $generic = ['background', 'introduction', 'key notes', 'conclusion', 'questions', 'application', 'summary', 'overview'];
+        $generic = ['background', 'introduction', 'key notes', 'key scriptures', 'conclusion', 'questions', 'application', 'summary', 'overview'];
 
-        preg_match_all('/<h[23][^>]*>(.*?)<\/h[23]>/is', $this->content_html ?? '', $matches);
+        // h4 included too: some modules only break real content into sub-points at that
+        // level (e.g. "1. What Righteousness Is...") with h3 reserved for generic section
+        // scaffolding ("Introduction", "Four Dimensions of..."), so h2/h3-only misses them.
+        preg_match_all('/<h[234][^>]*>(.*?)<\/h[234]>/is', $this->content_html ?? '', $matches);
         $subtitles = collect($matches[1] ?? [])
             ->map(fn ($h) => trim(strip_tags($h)))
             ->map(fn ($h) => preg_replace('/^module\s+\d+\s*:\s*/i', '', $h)) // "MODULE 1: X" → "X"
+            ->map(fn ($h) => preg_replace('/^\d+\.\s*/', '', $h))             // "1. X" → "X"
             ->filter(fn ($h) => $h !== ''
                 && !in_array(mb_strtolower($h), $generic, true)
                 && mb_strtolower($h) !== mb_strtolower($this->title))

@@ -3,6 +3,7 @@
 .env
 .env.backup
 .env.production
+env-backup-*.txt
 .phpactor.json
 .phpunit.result.cache
 /.fleet
@@ -24,4 +25,5 @@ Homestead.yaml
 Thumbs.db
 .gstack/
 database.sql
+*.sql
 public_build_fix.zip

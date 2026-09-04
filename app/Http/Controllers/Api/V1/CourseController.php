@@ -85,7 +85,7 @@ class CourseController extends Controller
             ->get()
             ->keyBy('module_id');
 
-        $modulesData = $course->modules->map(function ($module, $index) use ($enrollment, $completedModuleIds, $user, $examQCounts) {
+        $modulesData = $course->modules->map(function ($module, $index) use ($course, $enrollment, $completedModuleIds, $user, $examQCounts) {
             $isCompleted = in_array($module->id, $completedModuleIds);
             $isLocked    = !$enrollment || ($index > 0 && !in_array(
                 $course->modules[$index - 1]->id ?? null,

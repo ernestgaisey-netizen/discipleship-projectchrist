@@ -206,7 +206,12 @@ export default function ExamPage() {
             </div>
           )}
           {alert && <Alert type="error" onDismiss={() => setAlert(null)}>{alert.msg}</Alert>}
-          <button className="dp-btn dp-btn--primary dp-btn--lg" onClick={startExam}>Begin Exam →</button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <button className="dp-btn dp-btn--primary dp-btn--lg" onClick={startExam}>Begin Exam →</button>
+            <button className="dp-btn dp-btn--ghost" onClick={() => navigate(`/modules/${moduleId}`)}>
+              ← Not Now, Return to Module
+            </button>
+          </div>
         </div>
       </div>
     );
