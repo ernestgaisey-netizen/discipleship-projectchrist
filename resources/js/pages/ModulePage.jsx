@@ -88,7 +88,7 @@ export default function ModulePage() {
 
         {/* ── Sidebar ── */}
         {hasSidebar && (
-          <div className="dp-card" style={{ padding: 18, position: 'sticky', top: 78 }}>
+          <div className="dp-card dp-module-sidebar" style={{ padding: 18, position: 'sticky', top: 78 }}>
             <Link to={`/courses/${course?.id}`}
               style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#7A96B4', fontSize: 13, marginBottom: 14, textDecoration: 'none' }}>
               ← {course?.title}

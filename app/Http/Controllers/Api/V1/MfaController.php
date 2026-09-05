@@ -108,7 +108,7 @@ class MfaController extends Controller
             return response()->json(['success' => false, 'message' => 'Invalid verification code.'], 422);
         }
 
-        $user->update(['last_active_at' => now()]);
+        $user->recordDailyActivity();
         $token = $user->createToken('auth_token')->plainTextToken;
 
         AuditLogService::log('LOGIN_SUCCESS', "MFA login: {$user->email}", 'info', $user->id, [], $request);

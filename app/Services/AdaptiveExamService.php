@@ -97,12 +97,19 @@ class AdaptiveExamService
         $prevQuestion = $pool->firstWhere('id', $questionId);
         $wasCorrect   = $prevQuestion ? $this->isCorrect($prevQuestion, $answer) : false;
 
-        $next = $exam->randomize_qs
-            ? $this->pickNext($pool, collect($sequence), $prevQuestion, $wasCorrect)
-            : $pool->sortBy('order_index')->whereNotIn('id', $sequence)->first();
+        $isFollowUp = false;
+        if ($exam->randomize_qs) {
+            $next = $this->pickNext($pool, collect($sequence), $prevQuestion, $wasCorrect, $isFollowUp);
+        } else {
+            $next = $pool->sortBy('order_index')->whereNotIn('id', $sequence)->first();
+        }
 
         if ($next) {
             $session['question_sequence'][] = $next->id;
+            // Not shown as a topic/difficulty value (that would let a student game the
+            // pick) — just whether this question follows up on the one just answered,
+            // so the adaptive behavior is visible without revealing how it decides.
+            $session['followups'][$next->id] = $isFollowUp;
         }
 
         $this->saveSession($userId, $exam->id, $session, $exam->time_limit_secs);
@@ -142,6 +149,7 @@ class AdaptiveExamService
             'current_index'   => max(0, count($sequence) - 1),
             'total_questions' => $exam->questions_per_session,
             'question'        => $question?->withoutAnswer(),
+            'is_follow_up'    => $session['followups'][$currentId] ?? false,
         ];
     }
 
@@ -157,8 +165,9 @@ class AdaptiveExamService
 
     // ── Question selection ──────────────────────────────────────────────────────
 
-    private function pickNext(Collection $pool, Collection $used, ?ExamQuestion $prev, bool $prevCorrect): ?ExamQuestion
+    private function pickNext(Collection $pool, Collection $used, ?ExamQuestion $prev, bool $prevCorrect, bool &$isFollowUp = false): ?ExamQuestion
     {
+        $isFollowUp = false;
         $unused = $pool->whereNotIn('id', $used);
         if ($unused->isEmpty()) return null;
 
@@ -167,6 +176,7 @@ class AdaptiveExamService
             if ($sameTopic->isNotEmpty()) {
                 $target     = $this->shiftDifficulty($prev->difficulty, $prevCorrect);
                 $candidates = $sameTopic->where('difficulty', $target);
+                $isFollowUp = true;
                 return ($candidates->isNotEmpty() ? $candidates : $sameTopic)->random();
             }
             // No unused question shares this topic — fall through to a normal balanced pick.

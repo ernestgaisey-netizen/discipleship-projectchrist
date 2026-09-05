@@ -86,7 +86,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $user->update(['last_active_at' => now()]);
+        $user->recordDailyActivity();
         $token = $user->createToken('auth_token')->plainTextToken;
 
         AuditLogService::log('LOGIN_SUCCESS', "Login: {$user->email}", 'info', $user->id, [], $request);

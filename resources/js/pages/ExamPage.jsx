@@ -14,6 +14,7 @@ export default function ExamPage() {
 
   const [exam, setExam]               = useState(null);   // meta: title, pass_mark, time_limit, etc.
   const [question, setQuestion]       = useState(null);    // current question, no correct_answer
+  const [isFollowUp, setIsFollowUp]   = useState(false);   // this question followed up on the last answer
   const [currentIndex, setCurrentIndex] = useState(0);      // 0-based — also "questions completed so far"
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [loading, setLoading]         = useState(true);
@@ -31,6 +32,7 @@ export default function ExamPage() {
       .then(data => {
         setExam(data);
         setQuestion(data.question);
+        setIsFollowUp(!!data.is_follow_up);
         setCurrentIndex(data.current_index || 0);
         setSelectedAnswer(null);
         setTimeLeft(data.time_limit || null);
@@ -77,6 +79,7 @@ export default function ExamPage() {
         setResult(res);
       } else {
         setQuestion(res.question);
+        setIsFollowUp(!!res.is_follow_up);
         setCurrentIndex(res.current_index);
         setSelectedAnswer(null);
       }
@@ -93,6 +96,7 @@ export default function ExamPage() {
     try {
       const res = await examService.back(exam.exam_id);
       setQuestion(res.question);
+      setIsFollowUp(!!res.is_follow_up);
       setCurrentIndex(res.current_index);
       setSelectedAnswer(res.previous_answer ?? null);
     } catch (e) {
@@ -259,7 +263,15 @@ export default function ExamPage() {
         <div className="dp-card" style={{ padding: 30, marginBottom: 18 }}>
           {/* Question header badges */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 22, flexWrap: 'wrap', gap: 8 }}>
-            <span className="dp-badge dp-badge--blue">Question {currentIndex + 1} of {total}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <span className="dp-badge dp-badge--blue">Question {currentIndex + 1} of {total}</span>
+              {isFollowUp && (
+                <span className="dp-badge" style={{ background: '#FEF3C7', color: '#92400E' }}
+                  title="This question was chosen based on how you answered the last one">
+                  🔄 Follow-up
+                </span>
+              )}
+            </div>
             <span className="dp-badge" style={{ background: q.type === 'true_false' ? '#DBEAFE' : '#DCFCE7', color: q.type === 'true_false' ? '#1D4ED8' : '#15803D' }}>
               {q.type === 'mcq' ? 'Multiple Choice' : q.type === 'true_false' ? 'True / False' : 'Short Answer'}
             </span>

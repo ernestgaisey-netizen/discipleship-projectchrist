@@ -64,7 +64,10 @@ class ProgressController extends Controller
     public function courseProgress(Request $request, int $courseId): JsonResponse
     {
         $userId     = $request->user()->id;
-        $course     = Course::with('modules:id,title,order_index,is_published')->findOrFail($courseId);
+        // course_id must be selected here even though it's never read directly —
+        // Eloquent needs it to match each module back to its parent course when a
+        // column list is given; omit it and every module silently fails to attach.
+        $course     = Course::with('modules:id,course_id,title,order_index,is_published')->findOrFail($courseId);
         $enrollment = Enrollment::where('user_id', $userId)->where('course_id', $courseId)->first();
 
         if (!$enrollment) {

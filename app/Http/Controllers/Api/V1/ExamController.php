@@ -67,6 +67,7 @@ class ExamController extends Controller
                 'total_questions' => $session['total_questions'],
                 'current_index'   => $session['current_index'],
                 'question'        => $session['question'],
+                'is_follow_up'    => $session['is_follow_up'] ?? false,
             ],
         ]);
     }

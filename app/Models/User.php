@@ -35,6 +35,24 @@ class User extends Authenticatable
         ];
     }
 
+    // Consecutive-day activity streak. Called on every successful login. Same
+    // calendar day as last_active_at: no change (already counted today).
+    // Exactly one day later: streak continues. Any bigger gap (or first-ever
+    // login): streak resets to 1.
+    public function recordDailyActivity(): void
+    {
+        $today    = now()->toDateString();
+        $lastDate = $this->last_active_at?->toDateString();
+
+        if ($lastDate !== $today) {
+            $wasYesterday = $lastDate === now()->subDay()->toDateString();
+            $this->streak_days = $wasYesterday ? $this->streak_days + 1 : 1;
+        }
+
+        $this->last_active_at = now();
+        $this->save();
+    }
+
     public function enrollments()
     {
         return $this->hasMany(Enrollment::class);
