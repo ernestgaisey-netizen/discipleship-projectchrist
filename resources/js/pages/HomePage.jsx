@@ -6,14 +6,14 @@ import courseService from '../services/courseService';
 
 const STEPS = [
   {
-    n: 1, icon: '❤️', color: '#DC2626', bg: '#FEF2F2', bdr: '#FECACA',
+    n: 1, icon: '❤️', color: '#1B4F8A', bg: '#EFF6FF', bdr: '#BFDBFE',
     title: "God's Love Revealed in Christ",
     body: "God's love is not first seen in what you do for Him, but in what He has done for you in Christ. Before you ever knew Him, God loved you and demonstrated that love by giving His Son. Jesus is the perfect revelation of the Father's heart toward humanity.\n\nGod is not waiting for you to become perfect before He loves you. His love has already been proven in Christ.",
     verse: '"For God so loved the world that He gave His only begotten Son, that whoever believes in Him should not perish but have everlasting life."',
     ref: 'John 3:16',
   },
   {
-    n: 2, icon: '⚠️', color: '#D97706', bg: '#FFFBEB', bdr: '#FDE68A',
+    n: 2, icon: '⚠️', color: '#1B4F8A', bg: '#EFF6FF', bdr: '#BFDBFE',
     title: 'The Real Problem: Sin and Spiritual Death',
     body: "The problem of man is not merely bad behaviour. The deeper issue is spiritual death caused by sin. Man needed more than advice, motivation, or religion. Man needed life.\n\nSin brought separation, guilt, condemnation, and death. But God did not leave man helpless. From the beginning, God's answer to man's condition was Christ.",
     verse: '"For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord."',
@@ -27,21 +27,21 @@ const STEPS = [
     ref: '1 Corinthians 15:3–4 | John 14:6',
   },
   {
-    n: 4, icon: '🙏', color: '#16A34A', bg: '#F0FDF4', bdr: '#BBF7D0',
+    n: 4, icon: '🙏', color: '#1B4F8A', bg: '#EFF6FF', bdr: '#BFDBFE',
     title: 'Your Response: Believe the Gospel',
     body: "Your response to the gospel is not to try harder, clean yourself up first, or earn God's acceptance. Your response is to believe.\n\nWhen you believe in your heart that Jesus died and rose again, and you confess Him as Lord, you receive salvation. You are forgiven, made righteous, accepted in Christ, and given eternal life.",
     verse: '"If you confess with your mouth the Lord Jesus and believe in your heart that God raised Him from the dead, you will be saved." — Romans 10:9\n"For by grace you have been saved through faith… it is the gift of God." — Ephesians 2:8',
     ref: 'Romans 10:9 | Ephesians 2:8',
   },
   {
-    n: 5, icon: '📿', color: '#7C3AED', bg: '#F5F3FF', bdr: '#DDD6FE',
+    n: 5, icon: '📿', color: '#1B4F8A', bg: '#EFF6FF', bdr: '#BFDBFE',
     title: 'Prayer of Salvation',
     body: 'Pray this sincerely from your heart right now:\n\n"Lord Jesus, I believe the gospel: that You died for my sins, You were buried, and You rose again for my justification. I receive the gift of salvation by faith — not by my works, but by Your finished work. I confess that I am saved, forgiven, accepted, and made righteous in Christ. Thank You, Father, for giving me eternal life through Jesus Christ. Amen."',
     verse: '"Everyone who calls on the name of the Lord will be saved."',
     ref: 'Romans 10:13',
   },
   {
-    n: 6, icon: '🌱', color: '#0EA5A0', bg: '#F0FDFA', bdr: '#99F6E4',
+    n: 6, icon: '🌱', color: '#1B4F8A', bg: '#EFF6FF', bdr: '#BFDBFE',
     title: 'Next Steps: Grow in Christ',
     body: "Congratulations! You are now in Christ — a new creation, saved by grace and made alive through His finished work. Now grow in the knowledge of what Christ has already done in you through the Word, prayer, fellowship with a local church family, and discipleship.\n\nThe Project Christ Discipleship courses below will guide you step by step in understanding your new life in Christ.",
     verse: '"If anyone is in Christ, he is a new creation. Old things have passed away; behold, all things have become new."',
@@ -121,7 +121,7 @@ export default function HomePage({ user }) {
 
   const stats = [
     { num: disciples  > 0 ? `${disciples.toLocaleString()}+`  : '—', label: 'Active Disciples' },
-    { num: courses.length > 0 ? String(courses.length)        : '—', label: 'Courses' },
+    { num: courses.length > 0 ? String(courses.length)        : '—', label: courses.length === 1 ? 'Course' : 'Courses' },
     { num: modules    > 0 ? `${modules}+`                     : '—', label: 'Modules' },
     { num: questions  > 0 ? `${questions}+`                   : '—', label: 'Exam Questions' },
   ];

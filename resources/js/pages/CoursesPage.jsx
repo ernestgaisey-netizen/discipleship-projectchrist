@@ -136,7 +136,10 @@ export default function CoursesPage({ user }) {
             <p>{courses.length === 0 ? 'Check back soon — courses are being added.' : 'Try a different keyword or level filter.'}</p>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(320px,1fr))', gap: 22 }}>
+          /* auto-fit (not auto-fill) so unused column tracks collapse instead of
+             stretching the last real card — a lone card no longer looks stranded
+             in a third of an empty row when the catalog is small. */
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,320px))', gap: 22 }}>
             {filtered.map(c => {
               const grad       = cardGrad(c);
               const isEnrolled = c.is_enrolled;

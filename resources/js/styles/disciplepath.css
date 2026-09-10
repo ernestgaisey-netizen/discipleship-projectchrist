@@ -65,7 +65,9 @@ a:hover { text-decoration: underline; }
 /* ── Layout ─────────────────────────────────────────────── */
 .dp-container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
 .dp-grid-2   { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-.dp-grid-3   { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+/* auto-fit collapses unused column tracks instead of stretching them, so a
+   lone card doesn't end up stranded in a third of an empty row. */
+.dp-grid-3   { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 320px)); gap: 24px; }
 .dp-flex     { display: flex; align-items: center; }
 .dp-flex-between { display: flex; align-items: center; justify-content: space-between; }
 .dp-gap-sm   { gap: 8px; }

@@ -31,7 +31,7 @@ export default function CertificatesPage() {
           <EmptyState icon="🎓" title="No certificates yet"
             subtitle="Complete a course with a certificate enabled to earn one." />
         ) : (
-          <div className="dp-grid-2">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,320px))', gap: 24 }}>
             {certs.map(c => (
               <div key={c.id} className="dp-card">
                 <div style={{ background: 'linear-gradient(135deg,#0D1F35,#1B4F8A)', padding: '32px 24px', textAlign: 'center', color: 'white' }}>
