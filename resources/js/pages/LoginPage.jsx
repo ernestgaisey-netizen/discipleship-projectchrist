@@ -100,7 +100,7 @@ export default function LoginPage({ onLogin }) {
         <form onSubmit={handleLogin}>
           <div className="dp-form-group">
             <label className="dp-label">Email Address</label>
-            <input className="dp-input" type="email" placeholder="you@projectchrist.com"
+            <input className="dp-input" type="email" placeholder="you@projectchrist.org"
               value={form.email} onChange={e => set('email', e.target.value)} required autoFocus />
             {errors.email && <div className="dp-form-error">{errors.email[0]}</div>}
           </div>

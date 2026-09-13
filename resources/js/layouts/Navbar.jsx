@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import authService from '../services/authService';
 import notificationService from '../services/notificationService';
+import { playNotificationSound } from '../utils/notificationSound';
+
+const POLL_INTERVAL_MS = 25000;
 
 export default function Navbar({ user, onLogout }) {
   const navigate  = useNavigate();
@@ -10,10 +13,36 @@ export default function Navbar({ user, onLogout }) {
   const [menu, setMenu]         = useState(false);       // desktop user dropdown
   const [mobileOpen, setMobileOpen] = useState(false);  // mobile drawer
   const drawerRef = useRef(null);
+  const knownUnread = useRef(null); // null = no baseline fetched yet this session
 
   useEffect(() => {
-    if (user) notificationService.unreadCount().then(setUnread).catch(() => {});
+    if (user) notificationService.unreadCount().then(count => {
+      knownUnread.current = count; // keep the poll's baseline in sync (e.g. after marking as read)
+      setUnread(count);
+    }).catch(() => {});
   }, [user, location.pathname]);
+
+  // Poll for new notifications while logged in and chime when the unread
+  // count rises — there's no websocket/broadcast layer in this app, so this
+  // is the only way to surface a notification that arrives while a page is
+  // already open. The first poll after login just sets the baseline silently;
+  // only a later increase over that baseline plays the sound.
+  useEffect(() => {
+    if (!user) { knownUnread.current = null; return; }
+
+    const poll = () => {
+      notificationService.unreadCount().then(count => {
+        if (knownUnread.current !== null && count > knownUnread.current) {
+          playNotificationSound();
+        }
+        knownUnread.current = count;
+        setUnread(count);
+      }).catch(() => {});
+    };
+
+    const id = setInterval(poll, POLL_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [user]);
 
   // Close mobile drawer on route change
   useEffect(() => { setMobileOpen(false); setMenu(false); }, [location.pathname]);

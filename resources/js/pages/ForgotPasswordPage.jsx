@@ -39,7 +39,7 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleSubmit}>
               <div className="dp-form-group">
                 <label className="dp-label">Email Address</label>
-                <input className="dp-input" type="email" placeholder="you@example.com"
+                <input className="dp-input" type="email" placeholder="you@projectchrist.org"
                   value={email} onChange={e => setEmail(e.target.value)} required autoFocus />
               </div>
               <button type="submit" className="dp-btn dp-btn--primary dp-btn--full" disabled={loading}>

@@ -50,7 +50,7 @@ export default function RegisterPage({ onLogin }) {
         <form onSubmit={handleSubmit}>
           {[
             { key: 'name',                 label: 'Full Name',        type: 'text',     placeholder: 'John Believer' },
-            { key: 'email',                label: 'Email Address',    type: 'email',    placeholder: 'you@example.com' },
+            { key: 'email',                label: 'Email Address',    type: 'email',    placeholder: 'you@projectchrist.org' },
             { key: 'password',             label: 'Password',         type: 'password', placeholder: 'Min 6 characters' },
             { key: 'passwordConfirmation', label: 'Confirm Password', type: 'password', placeholder: 'Repeat password' },
           ].map(({ key, label, type, placeholder }) => (
