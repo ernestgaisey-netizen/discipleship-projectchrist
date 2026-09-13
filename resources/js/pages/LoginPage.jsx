@@ -100,7 +100,7 @@ export default function LoginPage({ onLogin }) {
         <form onSubmit={handleLogin}>
           <div className="dp-form-group">
             <label className="dp-label">Email Address</label>
-            <input className="dp-input" type="email" placeholder="you@example.com"
+            <input className="dp-input" type="email" placeholder="you@projectchrist.com"
               value={form.email} onChange={e => set('email', e.target.value)} required autoFocus />
             {errors.email && <div className="dp-form-error">{errors.email[0]}</div>}
           </div>
@@ -119,7 +119,7 @@ export default function LoginPage({ onLogin }) {
         </form>
 
         <p style={{ textAlign: 'center', marginTop: 20, fontSize: 14 }}>
-          Don't have an account? <Link to="/register" style={{ color: 'var(--dp-sky)', fontWeight: 600 }}>Create one free</Link>
+          Don't have an account? <Link to="/register" style={{ color: 'var(--dp-sky)', fontWeight: 600 }}>Sign Up</Link>
         </p>
       </div>
     </div>
